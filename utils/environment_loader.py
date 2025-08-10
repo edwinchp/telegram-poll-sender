@@ -22,3 +22,13 @@ class EnvironmentLoader:
             raise Exception("Please add CHAT_ID environment variable on .env file.")
 
         return chat_id
+
+    @staticmethod
+    def get_api_link():
+        load_dotenv()
+        api_link = os.getenv('API_LINK')
+
+        if not api_link:
+            raise Exception("Please add API_LINK environment variable on .env file.")
+
+        return api_link

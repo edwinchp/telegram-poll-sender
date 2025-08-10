@@ -10,6 +10,7 @@ def main():
     telegram_service = TelegramService(bot_token)
 
     data = DataFactory.get_random_data()
+    print(data)
     question = QuestionFactory.create_question(data)
 
     if question.messages:

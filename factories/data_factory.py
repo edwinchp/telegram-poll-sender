@@ -1,17 +1,26 @@
 import random
 import time
-
+import requests
+from utils.environment_loader import EnvironmentLoader
 from utils.json_reader import JsonReader
 
 
 class DataFactory:
 
+    API_LINK = EnvironmentLoader.get_api_link()
+
     @staticmethod
     def get_random_data():
-        data = JsonReader.get_results('data/data.json')
-        seed_value = int(time.time())
-        random.seed(seed_value)
-        return random.choice(data)
+
+        params = {
+            'difficulty': random.choice(['easy']),
+            'category': 'SELENIUM-101'
+        }
+
+        response = requests.get(DataFactory.API_LINK + '/questions/api/random-question/', params=params)
+        if response.status_code != 200:
+            raise Exception(f'Error fetching random data: {response.status_code} - {response.text}')
+        return response.json()
 
     @staticmethod
     def get_data_by_position(position):

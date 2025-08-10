@@ -5,7 +5,7 @@ I believe that taking notes is important when you want to retain information, bu
 
 
 ## 🚀 Getting Started:
-Create a bot in Telegram using BotFather.
+Create a bot in Telegram using [BotFather](https://t.me/botfather).
 
 Create a Telegram Channel or Group.
 
@@ -14,15 +14,30 @@ Clone the repository:
 git clone https://github.com/edwinchp/telegram-poll-sender
 ```
 
-Enter project folder using:
+Enter project folder:
 ```bash
 cd telegram-poll-sender/
 ```
 
-Install requirements:
-```bash
-python -m pip install -r requirements.txt
-```
+### Setting up the virtual environment
+
+1. Create a virtual environment (only needed once):
+   ```bash
+   # Windows
+   python -m venv venv
+   
+   # Activate the virtual environment
+   .\venv\Scripts\activate
+   
+   # On macOS/Linux
+   # python3 -m venv venv
+   # source venv/bin/activate
+   ```
+
+2. Install the required packages:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
 Create a .env file and add bot token and channel/group chat id:
 ```bash
