@@ -20,38 +20,59 @@ class QuestionFactory:
 
     @staticmethod
     def create_question(data):
-        correct_answer_before_shuffle = data['options'][QuestionFactory.get_answer_index(data['answer'])][:100]
         question = Question()
         question.id = data["id"]
-        question.options = QuestionFactory.shuffle_options(data['options'])
-        question.answer = QuestionFactory.get_correct_answer(question.options, correct_answer_before_shuffle)
-        question.correct_option_id = QuestionFactory.get_answer_index(question.answer)
-        question.explanation = data["explanation"]
-        question.question = data["question"]
+        question.question = data["question_text"]
+        question.explanation = data.get("short_explanation", "")
+        
+        # Shuffle the options
+        shuffled_options = QuestionFactory.shuffle_options(data['options'])
+        question.options = [opt["option_text"] for opt in shuffled_options]
+        
+        # Find the correct answer index after shuffling
+        question.correct_option_id = QuestionFactory.get_correct_answer(shuffled_options)
+        
+        # Get the answer letter based on the index
+        question.answer = QuestionFactory.find_key_by_value(
+            QuestionFactory.SUPPORTED_ANSWERS, 
+            question.correct_option_id
+        )
+        
         if 'messages' in data:
             question.messages = data["messages"]
         if 'photos' in data:
             question.photos = data['photos']
+            
         return question
 
     @staticmethod
     def get_answer_index(letter):
         pattern = r'[:.(),]'
-        modified_letter = re.sub(pattern, '', letter)
-        return QuestionFactory.SUPPORTED_ANSWERS.get(modified_letter.lower())
+        modified_letter = re.sub(pattern, '', letter).lower()
+        return QuestionFactory.SUPPORTED_ANSWERS.get(modified_letter, -1)
 
     @staticmethod
     def shuffle_options(options):
-        random.shuffle(options)
-        return options
+        # Make a copy to avoid modifying the original list
+        shuffled = options.copy()
+        random.shuffle(shuffled)
+        return shuffled
 
     @staticmethod
-    def get_correct_answer(options, answer):
-        for i in range(len(options)):
-            options[i] = options[i][:100]
-            if options[i] == answer:
-                answer = QuestionFactory.find_key_by_value(QuestionFactory.SUPPORTED_ANSWERS, i)
-        return answer
+    def get_correct_answer(options):
+        """
+        Find the index of the correct answer in the options list.
+        
+        Args:
+            options: List of dicts with 'option_text' and 'is_correct' keys
+            
+        Returns:
+            int: Index of the correct answer, or -1 if not found
+        """
+        for i, option in enumerate(options):
+            if option.get('is_correct', False):
+                return i
+        return -1
 
     @staticmethod
     def find_key_by_value(dictionary, index):
