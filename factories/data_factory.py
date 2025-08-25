@@ -18,7 +18,7 @@ class DataFactory:
             'category': DataFactory.API_REQUEST_CATEGORY
         }
 
-        response = requests.get(DataFactory.API_LINK + '/questions/api/random-question/', params=params)
+        response = requests.get(DataFactory.API_LINK + '/questions/api/random-question/', params=params, timeout=10)  # 10 second timeout
         if response.status_code != 200:
             raise Exception(f'Error fetching random data: {response.status_code} - {response.text}')
         return response.json()
