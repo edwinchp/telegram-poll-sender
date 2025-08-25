@@ -1,5 +1,4 @@
 import random
-import time
 import requests
 from utils.environment_loader import EnvironmentLoader
 from utils.json_reader import JsonReader
@@ -8,13 +7,15 @@ from utils.json_reader import JsonReader
 class DataFactory:
 
     API_LINK = EnvironmentLoader.get_api_link()
+    API_REQUEST_DIFFICULTY = EnvironmentLoader.get_api_request_difficulty()
+    API_REQUEST_CATEGORY = EnvironmentLoader.get_api_request_category()
 
     @staticmethod
     def get_random_data():
 
         params = {
-            'difficulty': random.choice(['easy']),
-            'category': 'SELENIUM-101'
+            'difficulty': DataFactory.API_REQUEST_DIFFICULTY,
+            'category': DataFactory.API_REQUEST_CATEGORY
         }
 
         response = requests.get(DataFactory.API_LINK + '/questions/api/random-question/', params=params)

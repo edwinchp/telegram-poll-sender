@@ -32,3 +32,23 @@ class EnvironmentLoader:
             raise Exception("Please add API_LINK environment variable on .env file.")
 
         return api_link
+
+    @staticmethod
+    def get_api_request_difficulty():
+        load_dotenv()
+        difficulty = os.getenv('API_REQUEST_DIFFICULTY')
+
+        if not difficulty:
+            raise Exception("Please add API_REQUEST_DIFFICULTY environment variable on .env file.")
+
+        return difficulty
+
+    @staticmethod
+    def get_api_request_category():
+        load_dotenv()
+        category = os.getenv('API_REQUEST_CATEGORY')
+
+        if not category:
+            raise Exception("Please add API_REQUEST_CATEGORY environment variable on .env file.")
+
+        return category

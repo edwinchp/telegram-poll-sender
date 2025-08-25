@@ -25,13 +25,11 @@ cd telegram-poll-sender/
    ```bash
    # Windows
    python -m venv venv
-   
-   # Activate the virtual environment
    .\venv\Scripts\activate
    
    # On macOS/Linux
-   # python3 -m venv venv
-   # source venv/bin/activate
+   python -m venv venv
+   source venv/bin/activate
    ```
 
 2. Install the required packages:
