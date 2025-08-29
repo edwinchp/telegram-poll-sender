@@ -47,6 +47,22 @@ Run script:
 python main.py
 ```
 
+## 🛠️ Jenkins Configuration
+
+**Create a New Pipeline Job**
+   - Click `New Item` > Enter a name > Select `Pipeline` > Click `OK`
+   - Under `General` section, check `This project is parameterized`
+
+### Jenkins Parameters Reference
+
+| Parameter Name | Type | Description | Example |
+|----------------|------|-------------|---------|
+| `BOT_TOKEN`    | Credential (Secret text) | Your Telegram Bot Token from BotFather | `123456789:ABCdefGHI...` |
+| `CHAT_ID`      | Credential (Secret text) | Your Telegram Chat/Channel ID | `-1001234567890` |
+| `API_LINK`     | String | Base URL for the questions API | `http://localhost:8000` |
+| `API_REQUEST_DIFFICULTY` | String | Difficulty level for questions | `any`, `easy`, `medium`, `hard` |
+| `API_REQUEST_CATEGORY` | String | Category for questions | `YOUR-CATEGORY` |
+
 
 ## 🧪 Run tests
 
