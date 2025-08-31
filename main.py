@@ -21,7 +21,7 @@ def main():
         telegram_service = TelegramService(bot_token)
         
         print("\n🔄 Fetching question data...")
-        data = DataFactory.get_random_data()
+        data = DataFactory.get_data()
         question = QuestionFactory.create_question(data)
         
         print(f"\n📝 Processing question: {question.question[:50]}...")

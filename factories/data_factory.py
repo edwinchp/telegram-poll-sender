@@ -11,14 +11,10 @@ class DataFactory:
     API_REQUEST_CATEGORY = EnvironmentLoader.get_api_request_category()
 
     @staticmethod
-    def get_random_data():
+    def get_data():
 
-        params = {
-            'difficulty': DataFactory.API_REQUEST_DIFFICULTY,
-            'category': DataFactory.API_REQUEST_CATEGORY
-        }
+        response = requests.get(DataFactory.API_LINK, timeout=10)
 
-        response = requests.get(DataFactory.API_LINK + '/questions/api/random-question/', params=params, timeout=10)  # 10 second timeout
         if response.status_code != 200:
             raise Exception(f'Error fetching random data: {response.status_code} - {response.text}')
         return response.json()
