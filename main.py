@@ -22,25 +22,26 @@ def main():
         
         print("\n🔄 Fetching question data...")
         data = DataFactory.get_data()
-        question = QuestionFactory.create_question(data)
-        
-        print(f"\n📝 Processing question: {question.question[:50]}...")
-        
-        if question.messages:
-            print(f"\n📤 Sending {len(question.messages)} message(s)...")
-            for i, message in enumerate(question.messages, 1):
-                print(f"  {i}. Sending message...")
-                telegram_service.send_message(chat_id, message)
-        
-        if question.photos:
-            print(f"\n🖼️  Sending {len(question.photos)} photo(s)...")
-            for i, photo in enumerate(question.photos, 1):
-                print(f"  {i}. Sending photo: {photo}")
-                telegram_service.send_photo(chat_id, photo)
-        
-        print("\n📊 Sending poll...")
-        telegram_service.send_poll(chat_id, question)
-        
+        for question_data in data: 
+            question = QuestionFactory.create_question(question_data)
+            
+            print(f"\n📝 Processing question: {question.question[:50]}...")
+            
+            if question.messages:
+                print(f"\n📤 Sending {len(question.messages)} message(s)...")
+                for i, message in enumerate(question.messages, 1):
+                    print(f"  {i}. Sending message...")
+                    telegram_service.send_message(chat_id, message)
+            
+            if question.photos:
+                print(f"\n🖼️  Sending {len(question.photos)} photo(s)...")
+                for i, photo in enumerate(question.photos, 1):
+                    print(f"  {i}. Sending photo: {photo}")
+                    telegram_service.send_photo(chat_id, photo)
+            
+            print("\n📊 Sending poll...")
+            telegram_service.send_poll(chat_id, question)
+            
     except Exception as e:
         print("\n❌ Error:", str(e))
         raise
