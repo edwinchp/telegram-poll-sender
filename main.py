@@ -11,35 +11,45 @@ def print_header():
     print("-" * 60)
 
 def main():
-    print_header()
-    start_time = time.time()
-    
+    print_header()    
     try:
-        print("🔑 Loading environment variables...")
+        print("- Loading environment variables...")
         bot_token = EnvironmentLoader.get_bot_token()
         chat_id = EnvironmentLoader.get_chat_id()
         telegram_service = TelegramService(bot_token)
         
-        print("\n🔄 Fetching question data...")
+        print("\n- Fetching question data...")
         data = DataFactory.get_data()
-        for question_data in data: 
+
+        # Accept an object (dict) or an array (list)
+        if isinstance(data, dict):
+            questions_data = [data]
+        elif isinstance(data, list):
+            questions_data = data
+        else:
+            raise ValueError("Data must be a dict (single question) or a list of dicts (multiple questions).")
+
+        print(f"✅ Fetched {len(questions_data)} question(s).")
+
+        for question_data in questions_data:
             question = QuestionFactory.create_question(question_data)
             
-            print(f"\n📝 Processing question: {question.question[:50]}...")
+            print("-" * 60)
+            print(f"- Processing question:\n{question_data}")
             
             if question.messages:
-                print(f"\n📤 Sending {len(question.messages)} message(s)...")
+                print(f"\n- Sending {len(question.messages)} message(s)...")
                 for i, message in enumerate(question.messages, 1):
                     print(f"  {i}. Sending message...")
                     telegram_service.send_message(chat_id, message)
             
             if question.photos:
-                print(f"\n🖼️  Sending {len(question.photos)} photo(s)...")
+                print(f"\n- Sending {len(question.photos)} photo(s)...")
                 for i, photo in enumerate(question.photos, 1):
                     print(f"  {i}. Sending photo: {photo}")
                     telegram_service.send_photo(chat_id, photo)
             
-            print("\n📊 Sending poll...")
+            print("\n- Sending poll...")
             telegram_service.send_poll(chat_id, question)
             
     except Exception as e:
