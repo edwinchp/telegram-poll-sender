@@ -3,4 +3,5 @@
 setup.json
 .env
 /reports
+/media
 __pycache__

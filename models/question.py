@@ -4,6 +4,7 @@ class Question:
         self.question = None
         self.messages = []
         self.photos = []
+        self.photo = None
         self.options = []
         self.answer = None
         self.explanation = None
@@ -16,6 +17,7 @@ class Question:
                 "question": self.question,
                 "messages": self.messages,
                 "photos": self.photos,
+                "photo": self.photo,
                 "options": self.options,
                 "answer": self.answer,
                 "explanation": self.explanation

@@ -42,6 +42,8 @@ class QuestionFactory:
             question.messages = data["messages"]
         if 'photos' in data:
             question.photos = data['photos']
+        if 'photo' in data:
+            question.photo = data['photo']
             
         return question
 

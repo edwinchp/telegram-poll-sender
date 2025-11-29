@@ -64,7 +64,6 @@ class TelegramService:
     def send_photo(self, chat_id, photo_path):
         url = f"https://api.telegram.org/bot{self.bot_token}/sendPhoto"
 
-        payload = {'chat_id': chat_id, 'photo': photo_path}
         try:
             start_time = time.time()
             with open(photo_path, 'rb') as photo_file:
